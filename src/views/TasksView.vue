@@ -1,6 +1,6 @@
 <template>
   <div class="tasks">
-    <v-app-bar color="rgb(0 0 0 / 0)" flat>
+    <v-app-bar color="rgba(1, 1, 1, 0.5)" flat>
       <v-app-bar-title>
         <router-link to="/">
           <div class="text-subtitle-1 text-uppercase py-2">
@@ -17,13 +17,17 @@
     </v-app-bar>
 
     <div v-if="tasksList.length" class="pa-4">
-      <div
+      <v-card
         v-for="task in tasksList"
         :key="task.id"
-        class="d-flex justify-space-between align-center py-1"
+        class="d-flex justify-space-between align-center pt-1 pb-10 mb-5"
       >
+        <template v-slot:image>
+          <v-img gradient="to top right, rgba(128,208,199,.8), rgba(159,146,227,1) 50%"></v-img>
+        </template>
         <v-checkbox
           :model-value="isFinishedTaskId(task.id)"
+          class="py-2"
           color="success"
           hide-details
           density="compact"
@@ -36,16 +40,28 @@
           </template>
         </v-checkbox>
 
-        <div class="actions">
+        <div class="actions px-4">
           <v-btn
             v-if="!isFinishedTaskId(task.id)"
             size="x-small"
-            icon="mdi-pencil"
+            icon=""
+            color="rgba(1, 1, 1, 0.1)"
             @click="onSetEditTask(task)"
-          />
-          <v-btn size="x-small" icon="mdi-delete" class="ml-2" @click="onSetRemoveTask(task.id)" />
+          >
+            <v-icon icon="mdi-pencil" color="grey-lighten-1" />
+          </v-btn>
+          <v-icon v-else icon="mdi-thumb-up" color="yellow" />
+          <v-btn
+            class="ml-auto"
+            size="x-small"
+            icon=""
+            color="rgba(1, 1, 1, 0.1)"
+            @click="onSetRemoveTask(task.id)"
+          >
+            <v-icon icon="mdi-trash-can-outline" color="pink-accent-3" />
+          </v-btn>
         </div>
-      </div>
+      </v-card>
     </div>
 
     <div v-else class="tasks-empty text-center">
@@ -158,6 +174,14 @@ const closeConfirmDialog = () => {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  .actions {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    display: flex;
   }
 }
 </style>
