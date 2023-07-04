@@ -11,7 +11,7 @@
 
       <v-spacer />
 
-      <v-btn icon @click="openCreateTaskModal">
+      <v-btn v-if="tasksList.length" icon @click="openCreateTaskModal">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
     </v-app-bar>
